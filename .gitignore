@@ -1,0 +1,24 @@
+```gitignore
+# Windows binaries
+*.exe
+*.dll
+*.obj
+*.o
+*.pdb
+
+# SFML build folders
+/bin/
+lib/
+
+# VS Code configs
+.vscode/
+*.code-workspace
+
+# Temporary files
+*.log
+*.tmp
+
+# Build directories
+build/
+out/
+dist/
