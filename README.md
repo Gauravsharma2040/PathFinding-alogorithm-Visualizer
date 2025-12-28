@@ -111,7 +111,7 @@ Maze generation algorithms
 Speed control slider
 
 Dark mode
-
+Primary implementation and framework design by Gaurav Sharma.
 📜 License
 
 This project is open-source and available under the MIT License
