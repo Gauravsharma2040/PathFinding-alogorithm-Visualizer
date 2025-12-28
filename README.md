@@ -1,3 +1,16 @@
+## Version 2.0 Update
+
+This release extends the original visualizer into an experimental framework
+for studying the robustness of A* heuristics under noise.
+
+### New in v2.0
+- Weighted terrain
+- Gaussian noise on traversal cost
+- Multiple heuristic regimes (h=0, admissible, noisy, aggressive)
+- Node expansion metrics
+- Empirically validated Dijkstra baseline
+
+
 # Pathfinding Algorithm Visualizer
 
 A desktop application built using **C++ and SFML** to visually demonstrate how different pathfinding algorithms explore a grid and compute optimal paths.  
