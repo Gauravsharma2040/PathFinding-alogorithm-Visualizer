@@ -1,5 +1,4 @@
 #include "Grid.h"
-
 #include <random>
 #include <algorithm>
 #include <vector>

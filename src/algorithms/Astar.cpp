@@ -61,7 +61,7 @@ std::vector<Node*> AStar(
         for (Node* n : grid.getNeighbors(cur)) {
             if (n->isWall) continue;
 
-            double tentativeG = cur->gCost + n->noisyCost;
+            double tentativeG = cur->gCost + n->trueCost;
 
             if (tentativeG < n->gCost) {
                 n->parent = cur;

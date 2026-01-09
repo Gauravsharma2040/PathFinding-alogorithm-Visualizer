@@ -1,0 +1,55 @@
+# ================================
+# Build artifacts
+# ================================
+*.o
+*.obj
+*.exe
+*.out
+*.app
+pathfinder
+# CMake / Make / build directories (if added later)
+build/
+cmake-build-*/
+Makefile
+CMakeFiles/
+CMakeCache.txt
+# ================================
+# Debug / profiling files
+# ================================
+*.log
+*.tmp
+*.swp
+*.swo
+*.stackdump
+# ================================
+# MSYS2 / MinGW / Windows
+# ================================
+*.dll
+*.lib
+*.a
+*.pdb
+# ================================
+# IDE / Editor files
+# ================================
+.vscode/
+.idea/
+*.code-workspace
+# VS Code C/C++ extension
+.ipch/
+compile_commands.json
+# ================================
+# OS-generated files
+# ================================
+.DS_Store
+Thumbs.db
+# ================================
+# Experiment outputs 
+# ================================
+data/raw/
+data/summaries/
+*.csv
+# ================================
+# Temporary scripts / backups
+# ================================
+*~
+*.bak

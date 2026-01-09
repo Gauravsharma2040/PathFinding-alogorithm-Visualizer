@@ -54,10 +54,10 @@ int main()
     // GRID + RENDER SETUP~
     // --------------------------
 
-    Grid grid(40, 40);
+    Grid grid(60,60);
     std::mt19937 rng(12345);
     grid.generateRandomWalls(0.20, rng);
-    double sigma = 0.0;
+    double sigma = 0.5;
     grid.applyNoise(sigma, rng);
     Renderer renderer(grid, 15);
 
