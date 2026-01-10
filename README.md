@@ -8,7 +8,7 @@ designed for large-scale, deterministic experimentation and collaborative analys
 - Deterministic experiment control via fixed RNG seeds
 - Clean separation between algorithmic core and SFML visualization
 - Dockerized build and execution for cross-platform reproducibility
-- Unified experiment output (path cost and node expansions) for automated analysi
+- Unified experiment output (path cost and node expansions) for automated analysis
 - Scalable grid configurations for stress-testing heuristics under noise
 
 ## Version 2.0 Update
