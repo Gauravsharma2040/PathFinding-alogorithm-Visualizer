@@ -1,5 +1,5 @@
 #pragma once
-#include "../../include/Node.h"
+#include "Node.h"
 #include <vector>
 #include <algorithm>
 

@@ -1,9 +1,7 @@
 #pragma once
-
 #include <vector>
-#include "../Grid.h"
-#include "../src/utils/input.h"   // for HeuristicMode
- 
+#include "Grid.h"
+#include "Algorithms/HeuristicMode.h"
 struct SearchStats
     {
         int expanded = 0;

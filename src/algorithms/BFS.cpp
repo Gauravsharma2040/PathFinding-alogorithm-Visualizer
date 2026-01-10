@@ -1,4 +1,4 @@
-#include "../../include/Algorithms/BFS.h"
+#include "Algorithms/BFS.h"
 #include <queue>
 
 std::vector<Node*> BFS(Grid& grid, Node* start, Node* goal) {

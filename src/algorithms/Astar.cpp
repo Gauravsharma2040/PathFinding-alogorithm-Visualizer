@@ -1,4 +1,4 @@
-#include "../../include/Algorithms/AStar.h"
+#include "Algorithms/Astar.h"
 #include <queue>
 #include <cmath>
 

@@ -45,6 +45,7 @@ CMakeCache.txt
 *.swp
 *.swo
 *.stackdump
+*.dockerignore
 # ================================
 # MSYS2 / MinGW / Windows
 # ================================

@@ -4,14 +4,33 @@
 #include <random>
 #include "Algorithms/BFS.h"
 #include "Algorithms/DFS.h"
-#include "Algorithms/AStar.h"
+#include "Algorithms/Astar.h"
 #include "Algorithms/Dijkstra.h"
 #include "utils/pathutils.h"
 #include "visualization/Render.h"
 #include "utils/input.h"
-
-int main()
+int main(int argc, char **argv)
 {
+    bool headless = false;
+    double sigma = 1.0;
+    uint32_t seed = 12345;
+    int rows = 100;
+    int cols = 100;
+    for (int i = 1; i < argc; ++i)
+    {
+        std::string arg = argv[i];
+        if (arg == "--headless")
+            headless = true;
+        else if (arg == "--sigma" && i + 1 < argc)
+            sigma = std::stod(argv[++i]);
+        else if (arg == "--seed" && i + 1 < argc)
+            seed = static_cast<uint32_t>(std::stoul(argv[++i]));
+        else if (arg == "--rows" && i + 1 < argc)
+            rows = std::stoi(argv[++i]);
+        else if (arg == "--cols" && i + 1 < argc)
+            cols = std::stoi(argv[++i]);
+    }
+
     struct AlgoResult
     {
         float cost = -1.f;
@@ -54,13 +73,44 @@ int main()
     // GRID + RENDER SETUP~
     // --------------------------
 
-    Grid grid(60,60);
-    std::mt19937 rng(12345);
+    Grid grid(rows, cols);
+    std::mt19937 rng(seed);
     grid.generateRandomWalls(0.20, rng);
-    double sigma = 0.5;
     grid.applyNoise(sigma, rng);
-    Renderer renderer(grid, 15);
+    //-----Docker-Headless-version(No SFML)----//////
+    if (headless)
+    {
+        SearchStats stats;
+        auto run_and_print = [&](const std::string &name,
+                                 HeuristicMode mode)
+        {
+            stats = {};
+            grid.resetState();
+            auto order = AStar(grid, grid.start, grid.goal, mode, stats);
+            float cost = grid.goal->gCost;
+            std::cout << name
+                      << ", cost=" << cost
+                      << ", expanded=" << stats.expanded
+                      << std::endl;
+        };
+        // Dijkstra baseline
+        stats = {};
+        grid.resetState();
+        Dijkstra(grid, grid.start, grid.goal, stats);
+        std::cout << "Dijkstra"
+                  << ", cost=" << grid.goal->distance
+                  << ", expanded=" << stats.expanded
+                  << std::endl;
 
+        // A* variants
+        run_and_print("A*_zero", HeuristicMode::Zero);
+        run_and_print("A*_admissible", HeuristicMode::Admissible);
+        run_and_print("A*_noisy", HeuristicMode::Noisy);
+        run_and_print("A*_aggressive", HeuristicMode::Aggressive);
+
+        return 0;
+    }
+    Renderer renderer(grid, 7);
     sf::RenderWindow window(
         sf::VideoMode({static_cast<unsigned>(grid.cols * renderer.getCellSize()),
                        static_cast<unsigned>(grid.rows * renderer.getCellSize())}),
@@ -70,15 +120,15 @@ int main()
     {
         std::cerr << "Failed to load font\n";
     }
-
+    //------Normal_running------///
     sf::Text finalCostText(font);
     finalCostText.setCharacterSize(18);
     finalCostText.setFillColor(sf::Color::White);
     finalCostText.setPosition(sf::Vector2f(10.f, 10.f));
     sf::RectangleShape hudBg;
-    hudBg.setFillColor(sf::Color(0, 0, 0, 150)); 
+    hudBg.setFillColor(sf::Color(0, 0, 0, 150));
     hudBg.setPosition(sf::Vector2f(5.f, 5.f));
-    hudBg.setSize(sf::Vector2f(380.f, 180.f)); 
+    hudBg.setSize(sf::Vector2f(380.f, 180.f));
 
     // --------------------------
     // MAIN LOOP
@@ -123,7 +173,7 @@ int main()
             grid.generateRandomWalls(0.20, rng);
             input.resetGrid = false;
         }
-         
+
         // BFS
         if (input.runBFS)
         {
@@ -136,35 +186,34 @@ int main()
         }
         // Dijkstra
         if (input.runDijkstra)
-        {    
-            stats = {}; 
+        {
+            stats = {};
             grid.resetState();
-            animationOrder = Dijkstra(grid, grid.start, grid.goal,stats);
+            animationOrder = Dijkstra(grid, grid.start, grid.goal, stats);
 
             animIndex = 0;
             animating = true;
             drawingPath = false;
 
             lastAlgo = AlgoType::DIJKSTRA;
-            showFinalCost = false; 
+            showFinalCost = false;
             input.runDijkstra = false;
         }
 
         // A*
         if (input.runAStar)
-        {   
-            stats = {}; 
+        {
+            stats = {};
             grid.resetState();
             animationOrder = AStar(
                 grid,
                 grid.start,
                 grid.goal,
                 input.heuristicMode,
-                stats
-            );
+                stats);
 
             lastAlgo = AlgoType::ASTAR;
-            showFinalCost = false; 
+            showFinalCost = false;
 
             animIndex = 0;
             animating = true;
@@ -203,7 +252,7 @@ int main()
             if (pathIndex < pathOrder.size())
             {
                 Node *p = pathOrder[pathIndex];
-                p->isPath = true; 
+                p->isPath = true;
                 pathIndex++;
             }
             else

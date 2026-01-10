@@ -1,4 +1,4 @@
-#include "../../include/Algorithms/DFS.h"
+#include "Algorithms/DFS.h"
 #include <stack>
 
 std::vector<Node*> DFS(Grid& grid, Node* start, Node* goal) {

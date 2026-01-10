@@ -1,7 +1,4 @@
-#include "../../include/Algorithms/Dijkstra.h"
-#include <queue>
-#include <limits>
-#include "../../include/Algorithms/Dijkstra.h"
+#include "Algorithms/Dijkstra.h"
 #include <queue>
 #include <limits>
 

@@ -1,17 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include "Algorithms/HeuristicMode.h" 
 enum class EditMode {
     Walls,
     Terrain
 };
-enum class HeuristicMode {
-    Zero,
-    Admissible,
-    Noisy,
-    Aggressive
-};
-
 struct InputState {
     bool runBFS = false;
     bool runDFS = false;
