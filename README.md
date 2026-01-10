@@ -1,3 +1,5 @@
+![Pathfinding Comparison](assets/example_image.png)
+
 ## Version 3.0 Update
 
 This release refactors the framework into a research-grade, reproducible system
