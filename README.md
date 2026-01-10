@@ -1,5 +1,5 @@
 ![Pathfinding Comparison](assets/example_image.png)
-
+Example visualization comparing Dijkstra and multiple A* heuristic configurations, showing path cost and node expansion counts.
 ## Version 3.0 Update
 
 This release refactors the framework into a research-grade, reproducible system
