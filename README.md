@@ -1,3 +1,16 @@
+## Version 3.0 Update
+
+This release refactors the framework into a research-grade, reproducible system
+designed for large-scale, deterministic experimentation and collaborative analysis.
+
+## New in v3.0
+- Headless execution mode for non-interactive experiments
+- Deterministic experiment control via fixed RNG seeds
+- Clean separation between algorithmic core and SFML visualization
+- Dockerized build and execution for cross-platform reproducibility
+- Unified experiment output (path cost and node expansions) for automated analysi
+- Scalable grid configurations for stress-testing heuristics under noise
+
 ## Version 2.0 Update
 
 This release extends the original visualizer into an experimental framework
