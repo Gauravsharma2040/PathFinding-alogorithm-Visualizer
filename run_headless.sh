@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 set -e
-ROWS=40
-COLS=40
-SIGMA=1.0
-SEED=12345
+
 echo "🔧 Building (headless)..."
-g++ -std=gnu++17 \
-    -O2 \
+
+g++ -std=gnu++17 -O2 \
     -Iinclude \
     src/main_headless.cpp \
     src/Grid.cpp \
@@ -19,5 +16,7 @@ g++ -std=gnu++17 \
 
 echo "🚀 Running headless experiment"
 echo "----------------------------------"
+echo "Args: $@"
 
+# Forward ALL arguments directly to C++
 ./pathfinder "$@"

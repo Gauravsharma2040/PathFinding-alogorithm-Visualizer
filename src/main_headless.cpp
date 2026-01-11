@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     uint32_t seed = 12345;
     int rows = 40;
     int cols = 40;
-
+    int trials = 1;
     for (int i = 1; i < argc; ++i)
     {
         std::string arg = argv[i];
@@ -23,26 +23,25 @@ int main(int argc, char **argv)
             sigma = std::stod(argv[++i]);
         else if (arg == "--seed" && i + 1 < argc)
             seed = static_cast<uint32_t>(std::stoul(argv[++i]));
+        else if (arg == "--trials" && i + 1 < argc)
+            trials = std::stoi(argv[++i]);
+
     }
 
-    std::mt19937 rng(seed);
-
+    for (int t = 0; t < trials; ++t) {
+    std::mt19937 rng(seed + t);
     Grid grid(rows, cols);
-
-    while (true)
-    {
-        grid = Grid(rows, cols);             // fresh grid object
-        grid.generateRandomWalls(0.20, rng); // new walls
-        grid.applyNoise(sigma, rng);         // new noise
-
+    while (true) {
+        grid = Grid(rows, cols);
+        grid.generateRandomWalls(0.20, rng);
+        grid.applyNoise(sigma, rng);
         grid.resetState();
         SearchStats tmp;
         Dijkstra(grid, grid.start, grid.goal, tmp);
-
-        if (grid.goal->distance < std::numeric_limits<double>::infinity())
-            break; // valid grid with path
+        if (grid.goal->distance < std::numeric_limits<double>::infinity()){
+            break;
+        }
     }
-
     SearchStats stats;
 
     // Dijkstra
@@ -65,6 +64,7 @@ int main(int argc, char **argv)
     runAStar("A*_admissible", HeuristicMode::Admissible);
     runAStar("A*_noisy", HeuristicMode::Noisy);
     runAStar("A*_aggressive", HeuristicMode::Aggressive);
+}
 
     return 0;
 }
