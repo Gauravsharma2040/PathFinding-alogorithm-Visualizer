@@ -20,9 +20,4 @@ g++ -std=gnu++17 \
 echo "🚀 Running headless experiment"
 echo "----------------------------------"
 
-./pathfinder --headless \
-    --rows "$ROWS" \
-    --cols "$COLS" \
-    --sigma "$SIGMA" \
-    --seed "$SEED"
-
+./pathfinder "$@"

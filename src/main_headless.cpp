@@ -4,22 +4,44 @@
 #include "Algorithms/Astar.h"
 #include "Algorithms/Dijkstra.h"
 #include "Algorithms/HeuristicMode.h"
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     double sigma = 1.0;
     uint32_t seed = 12345;
+    int rows = 40;
+    int cols = 40;
 
-    for (int i = 1; i < argc; ++i) {
+    for (int i = 1; i < argc; ++i)
+    {
         std::string arg = argv[i];
-        if (arg == "--sigma" && i + 1 < argc) sigma = std::stod(argv[++i]);
-        if (arg == "--seed"  && i + 1 < argc) seed  = std::stoul(argv[++i]);
+
+        if (arg == "--rows" && i + 1 < argc)
+            rows = std::stoi(argv[++i]);
+        else if (arg == "--cols" && i + 1 < argc)
+            cols = std::stoi(argv[++i]);
+        else if (arg == "--sigma" && i + 1 < argc)
+            sigma = std::stod(argv[++i]);
+        else if (arg == "--seed" && i + 1 < argc)
+            seed = static_cast<uint32_t>(std::stoul(argv[++i]));
     }
 
-    Grid grid(100, 100);
     std::mt19937 rng(seed);
 
-    grid.generateRandomWalls(0.20, rng);
-    grid.applyNoise(sigma, rng);
+    Grid grid(rows, cols);
+
+    while (true)
+    {
+        grid = Grid(rows, cols);             // fresh grid object
+        grid.generateRandomWalls(0.20, rng); // new walls
+        grid.applyNoise(sigma, rng);         // new noise
+
+        grid.resetState();
+        SearchStats tmp;
+        Dijkstra(grid, grid.start, grid.goal, tmp);
+
+        if (grid.goal->distance < std::numeric_limits<double>::infinity())
+            break; // valid grid with path
+    }
 
     SearchStats stats;
 
@@ -29,7 +51,7 @@ int main(int argc, char** argv)
     std::cout << "Dijkstra, cost=" << grid.goal->distance
               << ", expanded=" << stats.expanded << "\n";
 
-    auto runAStar = [&](const char* name, HeuristicMode mode)
+    auto runAStar = [&](const char *name, HeuristicMode mode)
     {
         stats = {};
         grid.resetState();

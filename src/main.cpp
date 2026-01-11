@@ -12,10 +12,10 @@
 int main(int argc, char **argv)
 {
     bool headless = false;
-    double sigma = 1.0;
-    uint32_t seed = 12345;
-    int rows = 100;
-    int cols = 100;
+    double sigma = 0.0;
+    uint32_t seed = 987654321;
+    int rows = 40;
+    int cols = 40;
     for (int i = 1; i < argc; ++i)
     {
         std::string arg = argv[i];
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
 
         return 0;
     }
-    Renderer renderer(grid, 7);
+    Renderer renderer(grid, 15);
     sf::RenderWindow window(
         sf::VideoMode({static_cast<unsigned>(grid.cols * renderer.getCellSize()),
                        static_cast<unsigned>(grid.rows * renderer.getCellSize())}),
